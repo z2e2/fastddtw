@@ -131,3 +131,44 @@ def plot_aligned_signals(signal_1, signal_2, path, title = 'aligned_signals'):
     plt.xlabel('time')
     plt.ylabel('value')
     plt.show()
+def plot_actual_search_space(signal_1, signal_2, K):
+    d_sig1 = est_derivatives(signal_1)
+    d_sig2 = est_derivatives(signal_2)
+    
+    len_d_sig1, len_d_sig2 = len(d_sig1), len(d_sig2)
+    if K > abs(len_d_sig1 -  len_d_sig2):
+        window = generate_window( len_d_sig1, len_d_sig2, K )
+    else:
+        K = 2*abs(len_d_sig1 -  len_d_sig2)
+        window = generate_window( len_d_sig1, len_d_sig2, K)
+        print('input K is not a good choice... selected K = ', K, 'instead.')
+    ddtw_mat = np.zeros((len_d_sig1, len_d_sig2))
+    for i, j in window:
+        ddtw_mat[i-1, j-1] = 1
+    ddtw_mat = ddtw_mat.T
+    fig = plt.imshow(ddtw_mat[::-1, :])
+    fig.axes.get_xaxis().set_visible(False)
+    fig.axes.get_yaxis().set_visible(False)
+    plt.show()
+    
+def plot_path_in_search_space(signal_1, signal_2, path, K):
+    d_sig1 = est_derivatives(signal_1)
+    d_sig2 = est_derivatives(signal_2)
+    
+    len_d_sig1, len_d_sig2 = len(d_sig1), len(d_sig2)
+    if K > abs(len_d_sig1 -  len_d_sig2):
+        window = generate_window( len_d_sig1, len_d_sig2, K )
+    else:
+        K = 2*abs(len_d_sig1 -  len_d_sig2)
+        window = generate_window( len_d_sig1, len_d_sig2, K)
+        print('input K is not a good choice... selected K = ', K, 'instead.')
+    ddtw_mat = np.zeros((len_d_sig1, len_d_sig2))
+    for i, j in window:
+        ddtw_mat[i-1, j-1] = 1
+    for i, j in path:
+        ddtw_mat[i, j] = 2
+    ddtw_mat = ddtw_mat.T
+    fig = plt.imshow(ddtw_mat[::-1, :])
+    fig.axes.get_xaxis().set_visible(False)
+    fig.axes.get_yaxis().set_visible(False)
+    plt.show()
