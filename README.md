@@ -16,9 +16,9 @@ The following are required:
 > However, DTW can produce produce pathological results. For example, the algorithm may fail to find obvious, natural alignments in two sequences simply because a feature (i.e peak, valley, inflection point, plateau etc.) in one sequence is slightly higher or lower than its corresponding feature in the other sequence. The problem can be addressed introducing a modification of DTW, Derivative Dynamic Time Warping. The crucial difference is in the features we consider when attempting to find the correct warping. Rather than use the raw data, we consider only the (estimated) local derivatives of the data.
 >
 
-The following formula discribes the derivative computation of a time series signal, $q$:
+The following formula discribes the derivative computation of a time series signal, q:
 
-$D_x[q]=\frac{(q_i-q_{i-1}) + (q_{i+1}-q_{i-1})/2}{2}$
+<img src="https://render.githubusercontent.com/render/math?math=D_x[q]=\frac{(q_i-q_{i-1}) + (q_{i+1}-q_{i-1})/2}{2}">
 
 > where i is a position of interest.
 > This modification of dynamic time warping can produce superior alignments between time series compared with DTW in the experiments. 
@@ -39,8 +39,9 @@ To perform the Fast Derivative Dynamic Time Warping for two time series signal, 
 ```python
 distance, path = fast_ddtw(signal_1, signal_2, K = 10)
 ```
-where `signal_1` and `signal_2` are numpy arrays of shape (n1,  ) and (n2,  ). `K` is the Sakoe-Chuba Band width used to constrain the search space of dynamic programming. This function returns the `distance` which is the Derivative Dynamic Time Warping distance and the `path` for optimal path.      
-
+where `signal_1` and `signal_2` are numpy arrays of shape (n1,  ) and (n2,  ). `K` is the Sakoe-Chuba Band width used to constrain the search space of dynamic programming. This function returns the `distance` which is the Derivative Dynamic Time Warping distance and the `path` for optimal path. For example, the following figure shows the two time-series signals:
+<img src="figures/before.png" alt="before" width="400"/>
+If you directly compute the euclidean distance between these two signals, the time shift is not considered. However, when running our `fast_ddtw` function, the time shift as well as the value difference after the alignment will be taken into consideration.
 To help visualize the process, we also developed a series of functions:
 1. To plot the search space:
 ```python
@@ -50,10 +51,14 @@ plot_actual_search_space(signal_1, signal_2, K = 10)
 ```python
 plot_path_in_search_space(signal_1, signal_2, path, K = 10)
 ```
+To improve the computational efficiency and prevent the algorithm to consider too big of a time delay, a search space constraint can be placed. The following figure shows an example of the Sakoe-Chuba Band used to reduce the search space.
+<img src="figures/search_space.png" alt="band" width="400"/>
 3. To plot the two signals after time warping (`fast_ddtw` must run first):
 ```python
 plot_aligned_signals(signal_1, signal_2, path, title = 'aligned_signals')
 ```
+After alignment, the lags between time-series are compensated and the resultant distance between two time-series considers both the lag and the difference given the two signals are aligned. The following figure shows the signals after the alignment:
+<img src="figures/after.png" alt="after" width="400"/>
 
 For more information, please refer to the [jupyter notebook demo](_FAST_DDTW_demo.ipynb) 
 
