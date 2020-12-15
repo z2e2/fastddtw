@@ -67,5 +67,7 @@ After alignment, the lags between time-series are compensated and the resultant 
 
 For more information, please refer to the [jupyter notebook demo](_FAST_DDTW_demo.ipynb) 
 
+## Reference
+1. Keogh, Eamonn J. and M. Pazzani. “Derivative Dynamic Time Warping.” SDM (2001). [url](https://www.ics.uci.edu/~pazzani/Publications/sdm01.pdf).
 
- 
+2. Salvador, S. and P. Chan. “FastDTW: Toward Accurate Dynamic Time Warping in Linear Time and Space.” (2004). [url](https://cs.fit.edu/~pkc/papers/tdm04.pdf)
