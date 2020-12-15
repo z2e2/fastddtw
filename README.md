@@ -18,7 +18,7 @@ The following are required:
 
 The following formula discribes the derivative computation of a time series signal, q:
 
-<img src="https://render.githubusercontent.com/render/math?math=D_x[q]=\frac{(q_i-q_{i-1})\+(q_{i\+1}-q_{i-1})/2}{2}">
+<img src="https://render.githubusercontent.com/render/math?math=D_x[q]=\frac{(q_i-q_{i-1})%2B(q_{i%2B1}-q_{i-1})/2}{2}">
 
 > where i is a position of interest.
 > This modification of dynamic time warping can produce superior alignments between time series compared with DTW in the experiments. 
